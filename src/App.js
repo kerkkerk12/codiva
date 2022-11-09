@@ -1,5 +1,6 @@
-import './App.css'
-import React, { Component } from 'react'
+import './css/App.css'
+import './css/Authen.css'
+import React from 'react'
 import {Routes, Route, NavLink, BrowserRouter } from 'react-router-dom'
 import Register from './components/Register'
 import Login from './components/Login'
@@ -13,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <header>
-        <h1>Hello World</h1>
+        <h1>The Codediva!</h1>
       </header>
       <nav>
         <NavLink end to="/" className={({isActive}) => isActive ? activeClassName : undefined}>Home</NavLink>

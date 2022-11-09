@@ -1,0 +1,36 @@
+.seper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+    padding: 0 40px;
+  }
+  .you {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    box-sizing: border-box;
+  }
+  .title1 {
+    padding-right: 200px;
+    padding-left: 50px;
+  }
+  .title2 {
+    padding-right: 390px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    box-sizing: border-box;
+  }
+  .title3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    box-sizing: border-box;
+  }
+  .loginbut {
+    padding-bottom: 20px;
+  }

@@ -13,16 +13,16 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 
+
 function Register() {
   const [value, setValue] = React.useState(dayjs("2014-08-18T21:11:54"));
-
-  const handleChange = (newValue) => {
-    setValue(newValue);
+  const [val, setChange] = useState("hello")
+  const handleChange = (event) => {
+    setChange(event.target.value);
   };
   const [showPassword, setShowPassword] = useState(false);
 
@@ -53,7 +53,7 @@ function Register() {
       <label class="title1">นามสกุล</label>
       <CardContent>
         <div class="seper">
-          <TextField required focused defaultValue="" placeholder="กรอกชื่อ" />
+          <TextField onChange ={handleChange} required focused defaultValue="" placeholder="กรอกชื่อ" />
           <TextField
             required
             defaultValue=""
@@ -143,7 +143,7 @@ function Register() {
             label="ฉันยินยอมรับข้อมูลข่าวสาร กิจกรรมส่งเสริมการขายต่างๆ จากสเวนเซ่นส์และบริษัทในเครือ โดยเราจะเก็บข้อมูลของท่านไว้เป็นความลับ สามารถศึกษาเงื่อนไขหรือข้อตกลง นโยบายความเป็นส่วนตัว เพิ่มเติมได้ที่เว็บไซต์ของบริษัทฯ"
           />
         </FormGroup>
-        <Button variant="contained">สมัครสมาชิก</Button>
+        <Button variant="contained" onClick={() => alert(val)}>สมัครสมาชิก</Button>
       </CardContent>
     </Card>
   );
