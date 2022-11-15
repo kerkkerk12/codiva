@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { onAuthStateChanged } from "./Firebase";
-import {getAuth } from 'firebase/auth'
+import React, { useState, useEffect, useContext } from "react";
+import auth, { onAuthStateChanged } from "./Firebase";
+
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setCurrentUser(user);
-        console.log(user)
+        setCurrentUser(user)
+        console.log(currentUser)
       } else console.log("no user available");
-    });
+    })
   }, []);
 
 
@@ -23,3 +22,6 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+export function useAuthValue(){
+  return useContext(AuthContext)
+}

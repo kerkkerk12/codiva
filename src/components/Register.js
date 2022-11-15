@@ -16,11 +16,13 @@ import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
-import auth, { createUserWithEmailAndPassword, updateProfile } from "./Firebase";
-import { async } from "@firebase/util";
+import auth, {
+  createUserWithEmailAndPassword,
+} from "./Firebase";
+import {db, collection, addDoc, setDoc, doc } from "./Firebase";
 
 function Register() {
-  const [val, setChange] = useState("hello");
+  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState("");
@@ -32,17 +34,26 @@ function Register() {
     event.preventDefault();
     let user;
     await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         user = userCredential.user;
-        console.log(user)
         
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error.message);
       });
-      
+      if (user){
+        console.log(user)
+        const ref = doc(db, "usersinformation", user.uid);
+        await setDoc(ref, {firstName, lastName, phoneNumber, birth:birth.toISOString(), gender})
+          // await addDoc(collection(db, "usersinformation"), firstName, lastName, phoneNumber, birth, gender)
+          .then((re) => {
+            alert("yes the data has been stored.");
+          })
+          .catch((e) => {
+            alert(e.message);
+          });
+      }
   };
-  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <Card sx={{ maxWidth: 600 }}>
@@ -195,7 +206,7 @@ function Register() {
             label="ฉันยินยอมรับข้อมูลข่าวสาร กิจกรรมส่งเสริมการขายต่างๆ จากสเวนเซ่นส์และบริษัทในเครือ โดยเราจะเก็บข้อมูลของท่านไว้เป็นความลับ สามารถศึกษาเงื่อนไขหรือข้อตกลง นโยบายความเป็นส่วนตัว เพิ่มเติมได้ที่เว็บไซต์ของบริษัทฯ"
           />
         </FormGroup>
-        <Button variant="contained" onClick={(e)=>handleClick(e)}>
+        <Button variant="contained" onClick={(e) => handleClick(e)}>
           สมัครสมาชิก
         </Button>
       </CardContent>

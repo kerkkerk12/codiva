@@ -13,11 +13,10 @@ function Login() {
   const [password, setPassword] = useState("");
   const handleClick = (e) => {
     e.preventDefault();
-    console.log(email, password)
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
+        console.log(user)
       })
       .catch((error) => {
         console.log(error.message);
