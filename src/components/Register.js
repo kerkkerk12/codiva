@@ -16,13 +16,31 @@ import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
-
+import auth, { createUserWithEmailAndPassword, updateProfile } from "./Firebase";
+import { async } from "@firebase/util";
 
 function Register() {
-  const [value, setValue] = React.useState(dayjs("2014-08-18T21:11:54"));
-  const [val, setChange] = useState("hello")
-  const handleChange = (event) => {
-    setChange(event.target.value);
+  const [val, setChange] = useState("hello");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [gender, setGender] = useState("");
+  const [birth, setBirth] = React.useState(dayjs("2014-08-18T21:11:54"));
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const handleClick = async (event) => {
+    event.preventDefault();
+    let user;
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        user = userCredential.user;
+        console.log(user)
+        
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+      
   };
   const [showPassword, setShowPassword] = useState(false);
 
@@ -53,8 +71,19 @@ function Register() {
       <label class="title1">นามสกุล</label>
       <CardContent>
         <div class="seper">
-          <TextField onChange ={handleChange} required focused defaultValue="" placeholder="กรอกชื่อ" />
           <TextField
+            onChange={(e) => {
+              setFirstName(e.target.value);
+            }}
+            required
+            focused
+            defaultValue=""
+            placeholder="กรอกชื่อ"
+          />
+          <TextField
+            onChange={(e) => {
+              setLastName(e.target.value);
+            }}
             required
             defaultValue=""
             focused
@@ -65,6 +94,9 @@ function Register() {
         <div class="you">
           <Box sx={{ width: 480, maxwidth: "100%" }}>
             <TextField
+              onChange={(e) => {
+                setPhoneNumber(e.target.value);
+              }}
               required
               fullWidth
               focused
@@ -77,6 +109,9 @@ function Register() {
         <div class="you">
           <Box sx={{ width: 480, maxwidth: "100%" }}>
             <TextField
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               required
               fullWidth
               focused
@@ -90,6 +125,9 @@ function Register() {
           <Box sx={{ width: 480, maxwidth: "100%" }}>
             <TextField
               type={showPassword ? "text" : "password"}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
               required
               fullWidth
               focused
@@ -104,16 +142,27 @@ function Register() {
         <FormControl>
           <label class="title3">เพศ (ไม่ระบุได้)</label>
           <RadioGroup
+            required
             row
             aria-labelledby="demo-row-radio-buttons-group-label"
             name="row-radio-buttons-group"
+            onChange={(e) => {
+              setGender(e.target.value);
+            }}
           >
             <FormControlLabel
               value="female"
               control={<Radio />}
               label="ผู้หญิง"
             />
-            <FormControlLabel value="male" control={<Radio />} label="ชาย" />
+            <FormControlLabel
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              value="male"
+              control={<Radio />}
+              label="ชาย"
+            />
             <FormControlLabel
               value="not speci"
               control={<Radio />}
@@ -125,10 +174,13 @@ function Register() {
         <div class="you">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker
+              required
               fullWidth
               inputFormat="MM/DD/YYYY"
-              value={value}
-              onChange={handleChange}
+              value={birth}
+              onChange={(e) => {
+                setBirth(e);
+              }}
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
@@ -143,7 +195,9 @@ function Register() {
             label="ฉันยินยอมรับข้อมูลข่าวสาร กิจกรรมส่งเสริมการขายต่างๆ จากสเวนเซ่นส์และบริษัทในเครือ โดยเราจะเก็บข้อมูลของท่านไว้เป็นความลับ สามารถศึกษาเงื่อนไขหรือข้อตกลง นโยบายความเป็นส่วนตัว เพิ่มเติมได้ที่เว็บไซต์ของบริษัทฯ"
           />
         </FormGroup>
-        <Button variant="contained" onClick={() => alert(val)}>สมัครสมาชิก</Button>
+        <Button variant="contained" onClick={(e)=>handleClick(e)}>
+          สมัครสมาชิก
+        </Button>
       </CardContent>
     </Card>
   );

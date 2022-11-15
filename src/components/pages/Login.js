@@ -5,24 +5,12 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import auth, { signInWithEmailAndPassword } from "./Firebase";
+
+
 function Login() {
+
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const handleClick = (e) => {
-    e.preventDefault();
-    console.log(email, password)
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
+
   return (
     <Card sx={{ maxWidth: 600 }}>
       <Box sx={{ position: "relative" }}>
@@ -35,8 +23,7 @@ function Login() {
         <Box
           sx={{
             position: "absolute",
-            bottom: 70,
-            right: 30,
+            top: 30,
             width: "150%",
             color: "white",
             padding: "10px",
@@ -46,15 +33,13 @@ function Login() {
           <Typography variant="h8">เข้าสู่ระบบเพื่อใช้งาน</Typography>
         </Box>
       </Box>
-
+      
       <CardContent>
+        
         <label class="title2">อีเมล</label>
         <div class="you">
           <Box sx={{ width: 480, maxwidth: "100%" }}>
             <TextField
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
               required
               fullWidth
               focused
@@ -68,30 +53,21 @@ function Login() {
           <Box sx={{ width: 480, maxwidth: "100%" }}>
             <TextField
               type={showPassword ? "text" : "password"}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              class="boxpass"
               required
               fullWidth
               focused
               defaultValue=""
               placeholder="กรอกรหัสผ่าน"
             />
-            <button onClick={() => setShowPassword((s) => !s)}>
+          </Box>
+            <button class="btn btn-danger" onClick={() => setShowPassword((s) => !s)}>
               กดเพื่อดูรหัสผ่าน
             </button>
-          </Box>
         </div>
+        
 
-        <button
-          class="btn btn-primary"
-          onClick={(e) => {
-            handleClick(e);
-          }}
-          type="submit"
-        >
-          เข้าสู่ระบบ
-        </button>
+        <button class="btn btn-primary" type="submit">เข้าสู่ระบบ</button>
       </CardContent>
     </Card>
   );
