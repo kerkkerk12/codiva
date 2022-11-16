@@ -11,7 +11,7 @@ import Dashboard from "./components/pages/Dashboard";
 import { AuthProvider } from "./components/Auth";
 
 function App() {
-  let currentUser;
+
   return (
     <AuthProvider>
       <BrowserRouter>

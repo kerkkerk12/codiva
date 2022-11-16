@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-
-const Dashboard = () => {
-    <h1>Welcome User : user</h1>
+import { useLocation } from "react-router-dom";
+let currentUser;
+function Dashboard () {
+    return(
+        <h1>Welcome User : {currentUser}</h1>
+    )
 }
 
 export default Dashboard;

@@ -21,7 +21,7 @@ function Login() {
       .then(async (userCredential) => {
         user = userCredential.user;
         setCurrentUser(user)
-        navigate("/dashboard")
+        navigate("/dashboard", {currentUser})
       })
       .catch((error) => {
         console.log(error.message);
