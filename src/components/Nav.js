@@ -3,14 +3,17 @@ import React from "react";
 import "../css/Nav.css";
 const Nav = () => {
   let activeClassName = "nav-active";
+
   return (
     <header class="header">
-      
       <div class="mid">
-        
-        <ul class="navbar">
-          
-
+        <img
+          class="image"
+          src="https://cdn.minorfood.com/uploaded/brand/logo/large/15542614515ca425cb5c71a.png"
+          alt="car"
+        />
+       
+        <ul class="navbar" >
           {/* <li>
             <NavLink
               end

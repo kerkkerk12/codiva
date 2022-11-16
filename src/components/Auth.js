@@ -8,13 +8,10 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentUser(user)
-        console.log(currentUser)
-      } else console.log("no user available");
-    })
+      setCurrentUser(user);
+      console.log(currentUser);
+    });
   }, []);
-
 
   return (
     <AuthContext.Provider value={{ currentUser }}>
@@ -22,6 +19,3 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-export function useAuthValue(){
-  return useContext(AuthContext)
-}

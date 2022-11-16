@@ -1,44 +1,139 @@
 .mid {
-  background-color: aqua;
-  display: inline-block;
-  width: 100%;
-  margin: auto;
-  text-align: center;
+  background-color: rgb(249, 249, 249);
 }
 
 .navbar {
   display: inline-block;
-  margin-left: 70%;
+  margin-left: 1360px;
 }
 
-.navbar li {
+li {
   list-style: none;
   display: inline-block;
-  margin: auto;
+  color: rgb(187, 37, 37);
+  font-size: 28px;
+  padding-left: 60px;
 }
 
-.navbar li a {
-  text-decoration: none;
-  color: rgb(29, 25, 231);
-  font-size: 35px;
-  padding: 8px 20px;
+.image {
+  width: 7%;
+  margin-left: 20px;
 }
 
-.navbar li a:hover {
-  color: rgb(151, 7, 247);
-  border: darkmagenta;
-  border-radius: 10px;
-  font-size: 40px;
+a {
+  color: rgb(239, 140, 140);
 }
-
-.navbar li a:active {
-  background-color: deepskyblue;
-  border-radius: 10px;
+ul {
+  width: 20%;
 }
-
-@media only screen and (max-width: 1127.50px) {
+@media only screen and (max-width: 1024px) {
+  ul {
+    width: 2%;
+  }
   .navbar {
-    margin-left: 0%;
+    margin-left: 600px;
+    width: 30%;
+  }
+  .mid {
+    width: 100%;
+  }
+  li {
+    padding: 20px;
+    list-style: none;
   }
 }
+
+@media only screen and (max-width: 912px) {
+  ul {
+    width: 4%;
+  }
+  .navbar {
+    margin-left: 500px;
+    width: 40%;
+  }
+  .mid {
+    width: 150%;
+  }
+  li {
+    padding: 20px;
+    list-style: none;
+  }
+}
+@media only screen and (max-width: 820px) {
+  .navbar {
+    margin-left: 400px;
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .navbar {
+    margin-left: 180px;
+    width: 80%;
+
+  }
+  .mid {
+    width: 100%;
+  }
+  li {
+    padding: 2px;
+
+  }
+  .image {
+    width: 60%;
+    padding-left: 200px;
+  }
+
+  ul {
+    width: 10%;
+  }
+}
+@media only screen and (max-width: 412px) {
+  .image {
+    width: 70%;
+    padding-left: 100px;
+  }
+  .navbar {
+    margin-left: 100px;
+
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .image {
+    width: 68%;
+    padding-left: 100px;
+  }
+  .navbar {
+    margin-left: 100px;
+
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .image {
+    width: 68%;
+    padding-left: 80px;
+  }
+  .navbar {
+    margin-left: 80px;
+
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .image {
+    width: 68%;
+    padding-left: 80px;
+  }
+  .mid {
+    width: 400px;
+  }
+  .navbar {
+    margin-left: 80px;
+
+  }
+}
+
+
 

@@ -5,25 +5,44 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
-
-
+import Button from "@mui/material/Button";
+import auth, { signInWithEmailAndPassword } from "../Firebase";
+import { useNavigate } from "react-router-dom";
 function Login() {
-
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
+  let navigate = useNavigate();
+  const handleClick = async (e) => {
+    let user;
+    e.preventDefault();
+    await signInWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
+        user = userCredential.user;
+        setCurrentUser(user)
+        navigate("/dashboard")
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
 
+  };
   return (
+    <div>
     <Card sx={{ maxWidth: 600 }}>
       <Box sx={{ position: "relative" }}>
         <CardMedia
           component="img"
-          height="140"
-          image="https://bobbyhadz.com/images/blog/react-prevent-multiple-button-clicks/thumbnail.webp"
+          height="200"
+          image="https://cdn.minorfood.com/uploaded/tiles/large/15845250845e71ef1cb015e.jpg"
           alt="swensen"
         />
         <Box
           sx={{
             position: "absolute",
-            top: 30,
+            bottom: 40,
+            left: 20,
             width: "150%",
             color: "white",
             padding: "10px",
@@ -33,13 +52,15 @@ function Login() {
           <Typography variant="h8">เข้าสู่ระบบเพื่อใช้งาน</Typography>
         </Box>
       </Box>
-      
+
       <CardContent>
-        
         <label class="title2">อีเมล</label>
         <div class="you">
           <Box sx={{ width: 480, maxwidth: "100%" }}>
             <TextField
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               required
               fullWidth
               focused
@@ -53,23 +74,33 @@ function Login() {
           <Box sx={{ width: 480, maxwidth: "100%" }}>
             <TextField
               type={showPassword ? "text" : "password"}
-              class="boxpass"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
               required
               fullWidth
               focused
               defaultValue=""
               placeholder="กรอกรหัสผ่าน"
             />
-          </Box>
-            <button class="btn btn-danger" onClick={() => setShowPassword((s) => !s)}>
+            <button onClick={() => setShowPassword((s) => !s)}>
               กดเพื่อดูรหัสผ่าน
             </button>
+          </Box>
         </div>
-        
 
-        <button class="btn btn-primary" type="submit">เข้าสู่ระบบ</button>
+        <button
+          class="btn btn-primary"
+          onClick={(e) => {
+            handleClick(e);
+          }}
+          type="submit"
+        >
+          เข้าสู่ระบบ
+        </button>
       </CardContent>
     </Card>
+    </div>
   );
 }
 

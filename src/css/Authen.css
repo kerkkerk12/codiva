@@ -1,36 +1,76 @@
 .seper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  
-    padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 40px;
+}
+.you {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+.title1 {
+  padding-right: 200px;
+  padding-left: 50px;
+}
+.title2 {
+  padding-right: 390px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+.title3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+.btn-primary {
+  margin-left: 250px;
+}
+.gender {
+  margin-left: 150px;
+}
+.nameGen {
+  margin-left: 225px;
+}
+
+@media only screen and (max-width: 540px) {
+  .btn-primary {
+    margin-left: 200px;
   }
-  .you {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 20px;
-    box-sizing: border-box;
+  .seper {
+    padding: 0 20px;
   }
   .title1 {
-    padding-right: 200px;
-    padding-left: 50px;
+
+    padding: 0 100px;
+  }
+}
+@media only screen and (max-width: 414px) {
+  .btn-primary {
+    margin-left: 125px;
+  }
+  .seper {
+    padding: 0 2px;
+  }
+  .title1 {
+
+    padding: 0 80px;
   }
   .title2 {
-    padding-right: 390px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 20px;
-    box-sizing: border-box;
+    padding-right: 250px;
   }
-  .title3 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 20px;
-    box-sizing: border-box;
+  .gender {
+    margin-left: 70px;
   }
-  .loginbut {
-    padding-bottom: 20px;
+  .nameGen {
+    margin-left: 130px;
   }
+}

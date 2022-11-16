@@ -15,66 +15,93 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { Navigate } from "react-router-dom";
+import Button from "@mui/material/Button";
+import auth, { createUserWithEmailAndPassword } from "../Firebase";
+import { db, collection, addDoc, setDoc, doc } from "../Firebase";
+import {useNavigate} from "react-router-dom";
 
 function Register() {
-  const value = React.useState(dayjs("2014-08-18T21:11:54"));
   const [showPassword, setShowPassword] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { email, password } = e.target.elements;
-    console.log(email, password);
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then( (res) => {
-        const user = res.user;
-        console.log(user);
-        // setCurrentUser(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [gender, setGender] = useState("");
+  const [birth, setBirth] = React.useState(dayjs("2014-08-18T21:11:54"));
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  let navigate = useNavigate();
+  const handleClick = async (event) => {
+    event.preventDefault();
+    let user;
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
+        user = userCredential.user;
       })
-      .catch((err) => alert(err));
+      .catch((error) => {
+        console.log(error.message);
+      });
+    if (user) {
+      navigate("/dashboard");
+      console.log(user);
+      const ref = doc(db, "usersinformation", user.uid);
+      await setDoc(ref, {
+        firstName,
+        lastName,
+        phoneNumber,
+        birth: birth.toISOString(),
+        gender,
+      })
+        // await addDoc(collection(db, "usersinformation"), firstName, lastName, phoneNumber, birth, gender)
+        .then((re) => {
+          alert("yes the data has been stored.");
+        })
+        .catch((e) => {
+          alert(e.message);
+        });
+    }
   };
-  if (currentUser) {
-    return <Navigate replace to="/dashboard" />;
-  }
-  return (
-    <Card sx={{ maxWidth: 600 }}>
-      <Box sx={{ position: "relative" }}>
-        <CardMedia
-          component="img"
-          height="140"
-          image="https://bobbyhadz.com/images/blog/react-prevent-multiple-button-clicks/thumbnail.webp"
-          alt="swensen"
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            top: 30,
-            width: "150%",
-            color: "white",
-            padding: "10px",
-          }}
-        >
-          <Typography variant="h4">สร้างบัญชี</Typography>
-          <Typography variant="h8">สมัครสมาชิก และ เริ่มต้นใช้งาน</Typography>
+
+
+    return (
+      <Card sx={{ maxWidth: 600 }}>
+        <Box sx={{ position: "relative" }}>
+          <CardMedia
+            component="img"
+            height="200"
+            image="https://cdn.minorfood.com/uploaded/tiles/large/15845250845e71ef1cb015e.jpg"
+            alt="swensen"
+          />
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 40,
+              left: 20,
+              width: "150%",
+              color: "white",
+              padding: "10px",
+            }}
+          >
+            <Typography variant="h4">สร้างบัญชี</Typography>
+            <Typography variant="h8">สมัครสมาชิก และ เริ่มต้นใช้งาน</Typography>
+          </Box>
         </Box>
-      </Box>
-      <label class="title1">ชื่อ</label>
-      <label class="title1">นามสกุล</label>
-      <form onSubmit={handleSubmit} name="registration_form">
+        <label class="title1">ชื่อ</label>
+        <label class="title1">นามสกุล</label>
         <CardContent>
           <div class="seper">
             <TextField
-              name="firstname"
+              onChange={(e) => {
+                setFirstName(e.target.value);
+              }}
               required
               focused
               defaultValue=""
               placeholder="กรอกชื่อ"
             />
             <TextField
-              name="lastname"
+              onChange={(e) => {
+                setLastName(e.target.value);
+              }}
               required
               defaultValue=""
               focused
@@ -85,7 +112,9 @@ function Register() {
           <div class="you">
             <Box sx={{ width: 480, maxwidth: "100%" }}>
               <TextField
-                name="number"
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value);
+                }}
                 required
                 fullWidth
                 focused
@@ -98,49 +127,61 @@ function Register() {
           <div class="you">
             <Box sx={{ width: 480, maxwidth: "100%" }}>
               <TextField
-                name="email"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 required
                 fullWidth
                 focused
+                defaultValue=""
                 placeholder="กรอกอีเมล"
               />
             </Box>
           </div>
-          <div class="pass">รหัสผ่าน</div>
+          <label class="title2">รหัสผ่าน</label>
           <div class="you">
             <Box sx={{ width: 480, maxwidth: "100%" }}>
               <TextField
-                name="password"
                 type={showPassword ? "text" : "password"}
-                class="boxpass"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 required
                 fullWidth
                 focused
                 defaultValue=""
                 placeholder="กรอกรหัสผ่าน"
               />
+              <button onClick={() => setShowPassword((s) => !s)}>
+                กดเพื่อดูรหัสผ่าน
+              </button>
             </Box>
-            <button
-              class="btn btn-danger"
-              onClick={() => setShowPassword((s) => !s)}
-            >
-              กดเพื่อดูรหัสผ่าน
-            </button>
           </div>
           <FormControl>
-            <label class="title3">เพศ (ไม่ระบุได้)</label>
+            <label class="nameGen">เพศ (ไม่ระบุได้)</label>
             <RadioGroup
+              class="gender"
+              required
               row
-              class="title3"
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
+              onChange={(e) => {
+                setGender(e.target.value);
+              }}
             >
               <FormControlLabel
                 value="female"
                 control={<Radio />}
                 label="ผู้หญิง"
               />
-              <FormControlLabel value="male" control={<Radio />} label="ชาย" />
+              <FormControlLabel
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                value="male"
+                control={<Radio />}
+                label="ชาย"
+              />
               <FormControlLabel
                 value="not speci"
                 control={<Radio />}
@@ -148,18 +189,21 @@ function Register() {
               />
             </RadioGroup>
           </FormControl>
-          {/* <label class="title3">ของขวัญวันเกิดรอคุณอยู่</label>
+          <label class="title3">ของขวัญวันเกิดรอคุณอยู่</label>
           <div class="you">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DesktopDatePicker
+                required
                 fullWidth
                 inputFormat="MM/DD/YYYY"
-                value={value}
-                // onChange={handleChange}
+                value={birth}
+                onChange={(e) => {
+                  setBirth(e);
+                }}
                 renderInput={(params) => <TextField {...params} />}
               />
             </LocalizationProvider>
-          </div> */}
+          </div>
           <FormGroup>
             <FormControlLabel
               control={<Checkbox />}
@@ -170,14 +214,12 @@ function Register() {
               label="ฉันยินยอมรับข้อมูลข่าวสาร กิจกรรมส่งเสริมการขายต่างๆ จากสเวนเซ่นส์และบริษัทในเครือ โดยเราจะเก็บข้อมูลของท่านไว้เป็นความลับ สามารถศึกษาเงื่อนไขหรือข้อตกลง นโยบายความเป็นส่วนตัว เพิ่มเติมได้ที่เว็บไซต์ของบริษัทฯ"
             />
           </FormGroup>
-          <button class="btn btn-primary" type="submit">
+          <Button variant="contained" class="btn btn-primary" onClick={(e) => handleClick(e)}>
             สมัครสมาชิก
-          </button>
+          </Button>
         </CardContent>
-      </form>
-    </Card>
-    
-  );
+      </Card>
+    );
 }
 
 export default Register;
