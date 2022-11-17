@@ -20,8 +20,7 @@ function Login() {
     await signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         user = userCredential.user;
-        setCurrentUser(user)
-        navigate("/dashboard", {currentUser})
+        navigate("/dashboard")
       })
       .catch((error) => {
         console.log(error.message);
